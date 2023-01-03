@@ -6,7 +6,7 @@ include '../../includes/session.php';
 
 ?>
 <title>
-    Miscellanous Fee List | SFAC - Bacoor
+    Miscellaneous Fee List | SFAC - Bacoor
 </title>
 </head>
 
@@ -56,7 +56,7 @@ $('document').ready(function() {
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">View Discount List</h6>
+        <h6 class="font-weight-bolder mb-0">View Miscellaneous List</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -66,7 +66,7 @@ $('document').ready(function() {
                     <div class="card shadow shadow-xl">
                         <!-- Card header -->
                         <div class="card-header">
-                            <h5 class="mb-0">Discount List</h5>
+                            <h5 class="mb-0">Miscellaneous List</h5>
                             <!-- <p class="text-sm mb-0">
                                         A lightweight, extendable, dependency-free javascript HTML table plugin.
                                     </p> -->
@@ -144,7 +144,7 @@ $('document').ready(function() {
                                                     <div class="py-3 text-center">
                                                         <i class="fas fa-trash-alt text-9xl"></i>
                                                         <h4 class="text-gradient text-danger mt-4">
-                                                            Delete Miscellanous Fee!</h4>
+                                                            Delete Miscellaneous Fee!</h4>
                                                         <p>This will collectively delete <b><?php echo $row['miscell_desc']; ?></b> from 1st to 4th year accounts. Are you sure you want to delete
                                                             <br>
                                                             <i><b><?php echo $row['miscell_desc']; ?></b></i>?

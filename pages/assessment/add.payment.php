@@ -139,9 +139,9 @@ $stud_no = $_GET['stud_no'];
                             ?>
                         
                         <div class="d-flex justify-content-end mt-4">
-                                <a class="btn bg-gradient-dark text-white m-0 ms-2" type="submit"
-                                    name="submit">Add
-                                    Discount</a>
+                                <a class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" href="list.assessment.php"
+                                    name="submit">Finish
+                                    </a>
                         </div>
                         <?php
                             }}

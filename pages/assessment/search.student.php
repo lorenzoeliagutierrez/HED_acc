@@ -7,7 +7,7 @@ include '../../includes/session.php';
 
 ?>
 <title>
-    Search Student | SFAC - Bacoor
+    Add Assessment | SFAC - Bacoor
 </title>
 </head>
 
@@ -16,7 +16,7 @@ include '../../includes/session.php';
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">Search Student</h6>
+        <h6 class="font-weight-bolder mb-0">Add Assessment</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -38,7 +38,7 @@ include '../../includes/session.php';
 
                             <div class="d-flex justify-content-end mt-4">
                                 <button class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" title="Send"
-                                    name="submit">Search</button>
+                                    name="submit">Add Assessment</button>
                             </div>
                         </form>
                     </div>

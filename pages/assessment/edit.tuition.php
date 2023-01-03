@@ -177,8 +177,8 @@ $tf_id = $_GET['tf_id'];
 
                             <div class="d-flex justify-content-end mt-4">
                                 <button class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" title="Send"
-                                    name="submit">Add
-                                    Discount</button>
+                                    name="submit">Edit
+                                    Tuition</button>
                             </div>
                         <?php
                                 }

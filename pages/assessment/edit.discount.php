@@ -7,7 +7,7 @@ include '../../includes/session.php';
 $disc_id = $_GET['disc_id']
 ?>
 <title>
-    Add New Discounts | SFAC - Bacoor
+    Edit Discounts | SFAC - Bacoor
 </title>
 </head>
 
@@ -16,7 +16,7 @@ $disc_id = $_GET['disc_id']
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">Add New Discount</h6>
+        <h6 class="font-weight-bolder mb-0">Edit Discount</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -24,7 +24,7 @@ $disc_id = $_GET['disc_id']
             <div class="row mb-10">
                 <div class="col-lg-9 col-12 mx-auto">
                     <div class="card card-body mt-4 shadow-sm">
-                        <h5 class="font-weight-bolder mb-0">Add Discount</h5>
+                        <h5 class="font-weight-bolder mb-0">Edit Discount</h5>
                         <p class="text-sm mb-0">Discount Details</p>
                         <hr class="horizontal dark my-3">
                         <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.discount.php?disc_id=<?php echo $disc_id; ?>">

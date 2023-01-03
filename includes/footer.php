@@ -500,7 +500,7 @@ unset($_SESSION['miscell_success']);
         </div>
         <hr class="horizontal dark m-0">
         <div class="toast-body">
-            Miscellanous Fee has been successfully added.
+            Miscellaneous Fee has been successfully added.
         </div>
     </div>
 

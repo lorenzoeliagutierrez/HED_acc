@@ -55,6 +55,7 @@ $stud_no = $_GET['stud_no'];
                                         $discount_array = explode(",",$row3['disc_id']);
                                         $lab_array = explode(",",$row3['lab_id']);
                                         $units = explode(",",$row3['lab_units']);
+                                        $payment = $row3['payment'];
                                     }
                                     $total_tuition =($tuition_fee * $total_unit);
                     
@@ -113,20 +114,14 @@ $stud_no = $_GET['stud_no'];
                             </div>
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <label class="mt-3">Payment</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="cash" name="payments[]" <?php echo ($payment == 'cash' ? 'checked' : '');?>>
-                                            <label>Cash</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="trimestral" name="payments[]" <?php echo ($payment == 'trimestral' ? 'checked' : '');?>>
-                                            <label>Trimestral</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="quarterly" name="payments[]" <?php echo ($payment == 'quarterly' ? 'checked' : '');?>>
-                                            <label>Quarterly</label>
-                                        </div>
+                                        <select class="form-control" id="gender" name="payment">
+                                            <option value="<?php echo $payment;?>"><?php echo ucfirst($payment);?></option>
+                                            <option value="cash">Cash</option>
+                                            <option value="trimestral">Trimestral</option>
+                                            <option value="quarterly">Quarterly</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -150,6 +145,32 @@ $stud_no = $_GET['stud_no'];
                                             </div>
                                         </div>
                                         <?php
+                                        }
+                                        ?>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="mt-3">NSTP</label>
+                                        <?php
+                                            $i = 1;
+                                            $selectLab = mysqli_query($acc,"SELECT * FROM tbl_nstp WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
+                                            while ($row5 = mysqli_fetch_array($selectLab)) {
+                                        ?>
+                                        <div class="form-check">
+                                            <div class="row">
+                                            <div class="col-sm-4">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp[]">
+                                            <label><?php echo $row5['component']?></label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                            <input class="form-control form-control-sm" name="index_nstp[]" type="number" placeholder="no. of units"> 
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
                                         }
                                         ?>
                                         

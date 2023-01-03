@@ -18,13 +18,9 @@ if (isset($_POST['submit'])) {
     $ay_id = mysqli_real_escape_string($db, $_POST['ay_id']);
     $sem_id = mysqli_real_escape_string($db, $_POST['sem_id']);
     $tf_id = mysqli_real_escape_string($db, $_POST['tf_id']);
+    $payment = mysqli_real_escape_string($db, $_POST['payment']);
 
     $updated_by = $fullname .' - '. $_SESSION['role'];
-
-    if(isset($_POST['payments'])) {
-        $payments_array = $_POST['payments'];
-        $payments_count = count($payments_array);
-    }
 
     if (isset($_POST['discounts'])) {
         $discounts_array = $_POST['discounts'];
@@ -51,33 +47,22 @@ if (isset($_POST['submit'])) {
     $index_value = implode(",",$index_array);
 
 
-    if ($payments_count <= 1) {
+    
+ 
 
-        $payment = $payments_array[0];
-
-        if (!empty($discounts_array) && !empty($payments_array)) {
+        if (!empty($discounts_array)) {
 
             $add_assessment = mysqli_query($acc, "INSERT INTO tbl_assessed_tf (ay_id, sem_id, disc_id, lab_id, lab_units, stud_no, payment, course_id, tf_id, created_at, last_updated, updated_by ) VALUES ('$ay_id', '$sem_id','$discount_value', '$lab_value', '$index_value', '$stud_no', '$payment', '$course_id', '$tf_id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$updated_by')") or die(mysqli_error($acc));
 
             $_SESSION['assessmentSuccess'] = true;
             header('location:../assessment.fee.php?stud_no='.$stud_no);
 
-        } elseif (empty($discounts_array) && !empty($payments_array)) {
+        } elseif (empty($discounts_array)) {
 
             $add_assessment = mysqli_query($acc, "INSERT INTO tbl_assessed_tf (ay_id, sem_id, lab_id, lab_units, stud_no, payment, course_id, tf_id, created_at, last_updated, updated_by ) VALUES ('$ay_id', '$sem_id', '$lab_value', '$index_value', '$stud_no', '$payment', '$course_id', '$tf_id', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '$updated_by')") or die(mysqli_error($acc));
 
             $_SESSION['assessmentSuccess'] = true;
             header('location:../assessment.fee.php?stud_no='.$stud_no);
 
-        } elseif (empty($payments_array)) {
-
-            $_SESSION['paymentEmpty'] = true;
-            header('location:../add.assessment.php?stud_no='.$stud_no);
-
-        }
-    } else {
-        $_SESSION['multiplePayment'] = true;
-        header('location:../add.assessment.php?stud_no='.$stud_no);
-
-    }
+        } 
 }

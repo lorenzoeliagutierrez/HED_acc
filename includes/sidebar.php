@@ -734,6 +734,29 @@
                 <span class="nav-link-text ms-1">Enrollment Breakdown</span>
             </a>
         </li>
+        <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Fees Assessment</h6>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../assessment/search.student.php">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-file-alt text-dark"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Add Assessment</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../assessment/list.assessment.php">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-file-alt text-dark"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">List Assessment</span>
+                </a>
+            </li>
             ';
             } elseif ("Accounting" == $_SESSION['role']) {
                 echo '<li class="nav-item">
@@ -864,7 +887,7 @@
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-file-alt text-dark"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Add Miscellanous Fees</span>
+                    <span class="nav-link-text ms-1">Add Miscellaneous Fees</span>
                 </a>
             </li>
 
@@ -875,6 +898,16 @@
                         <i class="fas fa-file-alt text-dark"></i>
                     </div>
                     <span class="nav-link-text ms-1">Add Laboratory Fees</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../assessment/add.nstp.php">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-file-alt text-dark"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Add NSTP Fees</span>
                 </a>
             </li>
 
@@ -913,7 +946,7 @@
                         class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-file-alt text-dark"></i>
                     </div>
-                    <span class="nav-link-text ms-1">List Miscellanous Fees</span>
+                    <span class="nav-link-text ms-1">List Miscellaneous Fees</span>
                 </a>
             </li>
 
@@ -924,6 +957,16 @@
                         <i class="fas fa-file-alt text-dark"></i>
                     </div>
                     <span class="nav-link-text ms-1">List Laboratory Fees</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="../assessment/list.nstp.php">
+                    <div
+                        class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-file-alt text-dark"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">List NSTP Fees</span>
                 </a>
             </li>
 

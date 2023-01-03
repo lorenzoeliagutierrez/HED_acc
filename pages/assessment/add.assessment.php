@@ -121,20 +121,13 @@ $stud_no = $_GET['stud_no'];
                             </div>
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-6">
                                         <label class="mt-3">Payment</label>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="cash" name="payments[]">
-                                            <label>Cash</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="trimestral" name="payments[]">
-                                            <label>Trimestral</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="quarterly" name="payments[]">
-                                            <label>Quarterly</label>
-                                        </div>
+                                        <select class="form-control" id="gender" name="payment">
+                                            <option value="cash">Cash</option>
+                                            <option value="trimestral">Trimestral</option>
+                                            <option value="quarterly">Quarterly</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -153,6 +146,32 @@ $stud_no = $_GET['stud_no'];
                                             </div>
                                             <div class="col-sm-3">
                                             <input class="form-control form-control-sm" name="index[]" type="number" placeholder="no. of units"> 
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        $i++;
+                                        }
+                                        ?>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="mt-3">NSTP</label>
+                                        <?php
+                                            $i = 1;
+                                            $selectLab = mysqli_query($acc,"SELECT * FROM tbl_nstp WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
+                                            while ($row5 = mysqli_fetch_array($selectLab)) {
+                                        ?>
+                                        <div class="form-check">
+                                            <div class="row">
+                                            <div class="col-sm-4">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp[]">
+                                            <label><?php echo $row5['component']?></label>
+                                            </div>
+                                            <div class="col-sm-3">
+                                            <input class="form-control form-control-sm" name="index_nstp[]" type="number" placeholder="no. of units"> 
                                             </div>
                                             </div>
                                         </div>

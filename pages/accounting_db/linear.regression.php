@@ -81,6 +81,14 @@ include '../../includes/session.php';
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
+                                  <p><span id="mean_x"></span></p>
+                                </div>
+                                <div class="col-sm-4">
+                                  <p><span id="mean_y"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
                                   <p><span id="pearson"></span></p>
                                 </div>
                                 <div class="col-sm-4">
@@ -322,6 +330,10 @@ include '../../includes/session.php';
             document.getElementById("estimation_total").innerHTML = "Estimated Number of Students as per "+ estimated_fee +" fee:<br> "+(b).toFixed(4) +"("+ estimated_fee +")"+"+ " + (a).toFixed(2)+ " = <b>"+ estimated_student +" number of students</b>";
             document.getElementById("pearson").innerHTML = "Pearson's r: <b>"+ (pearson_r).toFixed(4)+"</b>";
             document.getElementById("rsquared").innerHTML = "Coefficient of Determination: <b>"+ (rsquared).toFixed(4)+"</b>";
+
+            document.getElementById("mean_x").innerHTML = "Mean X: <b>"+ (mean_x).toFixed(2)+"</b>";
+            document.getElementById("mean_y").innerHTML = "Mean Y: <b>"+ (mean_y).toFixed(2)+"</b>";
+            
 
             xhttp = new XMLHttpRequest();
 

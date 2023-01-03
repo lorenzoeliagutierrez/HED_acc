@@ -70,7 +70,7 @@ include '../assessment/accountConn/conn.php';
                             </div>
                             <hr class="horizontal dark m-0">
                             <div class="text-center">
-                                <a href="enrolledStud.php" class="position-relative w-100 text-center py-1"
+                                <a href="../assessment/list.assessment.php" class="position-relative w-100 text-center py-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Show More">
                                     <i class="fas fa-chevron-down text-dark"></i>
                                 </a>
@@ -106,7 +106,7 @@ include '../assessment/accountConn/conn.php';
                             </div>
                             <hr class="horizontal dark m-0">
                             <div class="text-center">
-                                <a href="enrolledNewStud.php" class="position-relative w-100 text-center py-1"
+                                <a href="../assessment/list.discount.php" class="position-relative w-100 text-center py-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Show More">
                                     <i class="fas fa-chevron-down text-dark"></i>
                                 </a>
@@ -125,7 +125,7 @@ include '../assessment/accountConn/conn.php';
                             <div class="card-body position-relative z-index-2 p-1">
                                 <div class="text-center">
                                     <h6 class="mb-0 text-dark font-weight-bold mb-2">
-                                        Miscellanous Fees
+                                        Miscellaneous Fees
                                     </h6>
 
                                     <?php
@@ -142,7 +142,7 @@ include '../assessment/accountConn/conn.php';
                             </div>
                             <hr class="horizontal dark m-0">
                             <div class="text-center">
-                                <a href="enrolledOldStud.php" class="position-relative w-100 text-center py-1"
+                                <a href="../assessment/list.miscell.php" class="position-relative w-100 text-center py-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Show More">
                                     <i class="fas fa-chevron-down text-dark"></i>
                                 </a>
@@ -178,7 +178,7 @@ include '../assessment/accountConn/conn.php';
                             </div>
                             <hr class="horizontal dark m-0">
                             <div class="text-center">
-                                <a href="transferee.php" class="position-relative w-100 text-center py-1"
+                                <a href="../assessment/list.lab.php" class="position-relative w-100 text-center py-1"
                                     data-bs-toggle="tooltip" data-bs-placement="top" title="Show More">
                                     <i class="fas fa-chevron-down text-dark"></i>
                                 </a>
@@ -191,11 +191,7 @@ include '../assessment/accountConn/conn.php';
                 <div class="col-lg-7">
                     <div class="card z-index-2">
                         <div class="card-header pb-0">
-                            <h6>Sales overview</h6>
-                            <p class="text-sm">
-                                <i class="fa fa-arrow-up text-success"></i>
-                                <span class="font-weight-bold">4% more</span> in 2021
-                            </p>
+                            <h6>No of Enrollees</h6>
                         </div>
                         <div class="card-body p-3">
                             <div class="chart">

@@ -4,7 +4,7 @@ require '../accountConn/conn.php';
 session_start();
 date_default_timezone_set('Asia/Manila');
 
-    $res = mysqli_query($acc, "SELECT * FROM tbl_miscellanous_fees") or die("Error: ".mysqli_error($acc));
+    $res = mysqli_query($acc, "SELECT * FROM tbl_nstp") or die("Error: ".mysqli_error($acc));
     $dataArray = array();
     while( $row = mysqli_fetch_array($res) ) {
 
@@ -19,23 +19,23 @@ date_default_timezone_set('Asia/Manila');
             }
     
     
-        $miscell_desc = $row["miscell_desc"];
-        $Miscellaneous = number_format($row["miscellanous"], 2);
+        $component = $row["component"];
+        $component_value = number_format($row["component_value"], 2);
         $created_at = $row["created_at"];
         $last_updated = $row["last_updated"];
         $updated_by = $row["updated_by"];
-        $miscell_id = $row["miscell_id"];
+        $nstp_id = $row["nstp_id"];
 
 
         $dataArray[] = array(
-            "miscell_desc" => $miscell_desc,
+            "component" => $component,
             "year_id" => $year_id,
-                  "miscellanous" => $Miscellaneous,
+                  "component_value" => $component_value,
                   "ay_id" => $ay_id,
                   "created_at" => $created_at,
                   "last_updated" => $last_updated,
                   "updated_by" => $updated_by,
-                  "miscell_id" => $miscell_id
+                  "nstp_id" => $nstp_id
         );
     
     }

@@ -175,7 +175,7 @@ date_default_timezone_set('Asia/Manila');
                                             }
                                         ?>
                                         <tr>
-                                            <td><b>Total Miscellanous Fee</b></td>
+                                            <td><b>Total Miscellaneous Fee</b></td>
                                             <td style="text-align: right;"><b><?php echo 'Php '.number_format($total_miscell, 2);?></b></td>
                                         </tr>
                                         <tr>
@@ -223,6 +223,21 @@ date_default_timezone_set('Asia/Manila');
                                             }
                                         }
                                         ?>   
+                                        <td tyle="text-align: right;">
+                                        <?php
+                                                                    $history = mysqli_query($acc, "SELECT * FROM tbl_assessed_tf WHERE status = 'Unpaid' AND stud_no = '$stud_no' AND NOT ay_id = '$_SESSION[AYear]' ORDER BY created_at DESC");
+                                                                    while ($row1 = mysqli_fetch_array($history)) {
+                                                                        $get_ay_id = mysqli_query($db,"SELECT * FROM tbl_acadyears WHERE ay_id = '$row1[ay_id]'");
+                                                                        $row_ay = mysqli_fetch_array($get_ay_id);
+                                                                        $academic_year = $row_ay['academic_year'];
+                                                                ?>
+
+                                                                    <a  class="btn bg-danger text-white m-0 ms-2">Unpaid Account !<br><?php echo $academic_year;?></a>
+
+                                                                <?php
+                                                                    }
+                                                                ?>
+                                        </td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -8,7 +8,7 @@ $lab_id = $_GET['lab_id'];
 
 ?>
 <title>
-    Add New Laboratory Fees | SFAC - Bacoor
+    Edit Laboratory Fees | SFAC - Bacoor
 </title>
 </head>
 <script>
@@ -53,7 +53,7 @@ $lab_id = $_GET['lab_id'];
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">Add New Laboratory Fees</h6>
+        <h6 class="font-weight-bolder mb-0">Edit Laboratory Fees</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -165,8 +165,8 @@ $lab_id = $_GET['lab_id'];
 
                             <div class="d-flex justify-content-end mt-4">
                                 <button class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" title="Send"
-                                    name="submit">Add
-                                    Discount</button>
+                                    name="submit">Edit
+                                    Laboratory</button>
                             </div>
                         <?php
                                 }

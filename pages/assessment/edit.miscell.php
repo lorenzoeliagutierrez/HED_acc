@@ -8,7 +8,7 @@ $miscell_id = $_GET['miscell_id'];
 
 ?>
 <title>
-    Add New Miscellanous Fee | SFAC - Bacoor
+    Edit Miscellaneous Fee | SFAC - Bacoor
 </title>
 </head>
 <script>
@@ -53,7 +53,7 @@ $miscell_id = $_GET['miscell_id'];
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">Add New Miscellanous Fee</h6>
+        <h6 class="font-weight-bolder mb-0">Edit Miscellaneous Fee</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -61,8 +61,8 @@ $miscell_id = $_GET['miscell_id'];
             <div class="row mb-10">
                 <div class="col-lg-9 col-12 mx-auto">
                     <div class="card card-body mt-4 shadow-sm">
-                        <h5 class="font-weight-bolder mb-0">Add Miscellanous Fee</h5>
-                        <p class="text-sm mb-0">Miscellanous Fee Details</p>
+                        <h5 class="font-weight-bolder mb-0">Edit Miscellaneous Fee</h5>
+                        <p class="text-sm mb-0">Miscellaneous Fee Details</p>
                         <hr class="horizontal dark my-3">
                         <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.miscell.php?miscell_id=<?php echo $miscell_id;?>" autocomplete="off" required>
                             <?php
@@ -71,8 +71,8 @@ $miscell_id = $_GET['miscell_id'];
                             ?>
                             <div class="row">
                                 <div class="col-sm-8">
-                                    <label>Miscellanous Fee Description</label>
-                                    <input class="form-control" type="text" placeholder="Miscellanous Fee Description" value="<?php echo $row1['miscell_desc']?>"
+                                    <label>Miscellaneous Fee Description</label>
+                                    <input class="form-control" type="text" placeholder="Miscellaneous Fee Description" value="<?php echo $row1['miscell_desc']?>"
                                         name="miscell_desc" required/>
                                 </div>
                                 <div class="col-sm-4">
@@ -123,7 +123,7 @@ $miscell_id = $_GET['miscell_id'];
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
-                                    <label class="mt-3">Miscellanous Fee</label>
+                                    <label class="mt-3">Miscellaneous Fee</label>
                                     <input class="form-control" type="text" placeholder="Enter discount value" id="miscell_<?php echo $i;?>" value="<?php echo $row2['miscellanous'];?>"
                                         name="miscellanous<?php echo $i;?>" required/>
                                 </div>
@@ -154,7 +154,7 @@ $miscell_id = $_GET['miscell_id'];
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
-                                    <label class="mt-3">Miscellanous Fee</label>
+                                    <label class="mt-3">Miscellaneous Fee</label>
                                     <input class="form-control" type="text" placeholder="Enter discount value" id="miscell_<?php echo $i;?>" disabled
                                         name="miscellanous<?php echo $i;?>" required/>
                                 </div>
@@ -165,8 +165,8 @@ $miscell_id = $_GET['miscell_id'];
 
                             <div class="d-flex justify-content-end mt-4">
                                 <button class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" title="Send"
-                                    name="submit">Add
-                                    Discount</button>
+                                    name="submit">Edit
+                                    Miscellanous</button>
                             </div>
                         <?php
                                 }

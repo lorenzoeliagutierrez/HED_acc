@@ -37,8 +37,8 @@ if (isset($_POST['submit'])) {
 
         if (isset($_POST['miscellanous'.$i])) {
 
-        $miscellanous = mysqli_real_escape_string($db, $_POST['miscellanous'.$i]);
-        $miscell_check = mysqli_query($acc, "SELECT * FROM tbl_miscellanous_fees WHERE miscellanous = '$miscellanous' AND ay_id = '$ay_id' AND year_id = '$year_value'") or die(mysqli_error($acc));
+        $miscellaneous = mysqli_real_escape_string($db, $_POST['miscellanous'.$i]);
+        $miscell_check = mysqli_query($acc, "SELECT * FROM tbl_miscellanous_fees WHERE miscellanous = '$miscellaneous' AND ay_id = '$ay_id' AND year_id = '$year_value'") or die(mysqli_error($acc));
         $result = mysqli_num_rows($miscell_check);
 
         if ($result == 0) {
@@ -63,8 +63,8 @@ if (isset($_POST['submit'])) {
 
         if (isset($_POST['miscellanous'.$j])) {
         
-        $miscellanous = mysqli_real_escape_string($db, $_POST['miscellanous'.$j]);
-        $miscell_check = mysqli_query($acc, "INSERT INTO tbl_miscellanous_fees (miscellanous, ay_id, miscell_desc, year_id, updated_by, created_at, last_updated) VALUES ('$miscellanous',  '$ay_id', '$miscell_desc', '$year_value', '$updated_by', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)") or die(mysqli_error($acc));
+        $miscellaneous = mysqli_real_escape_string($db, $_POST['miscellanous'.$j]);
+        $miscell_check = mysqli_query($acc, "INSERT INTO tbl_miscellanous_fees (miscellanous, ay_id, miscell_desc, year_id, updated_by, created_at, last_updated) VALUES ('$miscellaneous',  '$ay_id', '$miscell_desc', '$year_value', '$updated_by', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)") or die(mysqli_error($acc));
 
         } else {
             
