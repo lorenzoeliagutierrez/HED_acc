@@ -4,7 +4,7 @@ include '../../includes/head.php';
 include 'accountConn/conn.php';
 include '../../includes/session.php';
 
-$stud_no = $_GET['stud_no'];
+$assessed_id = $_GET['assessed_id'];
 
 ?>
 <title>
@@ -28,36 +28,39 @@ $stud_no = $_GET['stud_no'];
                         <h5 class="font-weight-bolder mb-0">Edit Assessment</h5>
                         <p class="text-sm mb-0">Assessment Details</p>
                         <hr class="horizontal dark my-3">
-                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.assessment.php?stud_no=<?php echo $stud_no?>">
+                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.assessment.php?assessed_id=<?php echo $assessed_id?>">
                             <?php
-                                $studInfo = mysqli_query($db, "SELECT *,CONCAT(tbl_students.lastname, ', ', tbl_students.firstname, ' ', tbl_students.middlename)  as fullname FROM tbl_schoolyears 
-                                LEFT JOIN tbl_students ON tbl_students.stud_id = tbl_schoolyears.stud_id
-                                LEFT JOIN tbl_courses ON tbl_courses.course_id = tbl_schoolyears.course_id 
-                                WHERE tbl_students.stud_no = '$stud_no' AND ay_id = '$_SESSION[AC]' AND sem_id = '$_SESSION[S]' AND remark = 'Approved'") or die (mysqli_error($db));
-                                while ($row1 = mysqli_fetch_array($studInfo)) {
-
-                                    $unittotal = mysqli_query($db, "SELECT SUM(unit_total) AS total_unit FROM tbl_enrolled_subjects
-                                    LEFT JOIN tbl_subjects_new ON tbl_subjects_new.subj_id = tbl_enrolled_subjects.subj_id
-                                    WHERE tbl_enrolled_subjects.stud_id = '$row1[stud_id]' AND tbl_enrolled_subjects.acad_year = '$_SESSION[AC]' AND tbl_enrolled_subjects.semester = '$_SESSION[S]'") or die (mysqli_error($db));
-
-                                    while ($row2 = mysqli_fetch_array($unittotal)) {
-                                        $total_unit = $row2['total_unit'];
-                                    }
-
-                                    $tuitionInfo = mysqli_query($acc, "SELECT tuition_fee, tbl_tuition_fees.tf_id, payment, tbl_assessed_tf.created_at, disc_id, lab_units, lab_id FROM tbl_assessed_tf
+                                    $assessment_info = mysqli_query($db, "SELECT * FROM tbl_assessed_tf
                                     LEFT JOIN tbl_tuition_fees ON tbl_tuition_fees.tf_id = tbl_assessed_tf.tf_id
-                                    WHERE tbl_assessed_tf.course_id = '$row1[course_id]' AND tbl_assessed_tf.ay_id = '$_SESSION[AYear]' AND year_id = '$row1[year_id]'") or die (mysqli_error($acc));
+                                    WHERE assessed_id = $assessed_id") or die (mysqli_error($db));
 
-                                    while ($row3 = mysqli_fetch_array($tuitionInfo)) {
-                                        $tuition_fee = $row3['tuition_fee'];
-                                        $tf_id = $row3['tf_id'];
-                                        $payment = $row3['payment'];
-                                        $discount_array = explode(",",$row3['disc_id']);
-                                        $lab_array = explode(",",$row3['lab_id']);
-                                        $units = explode(",",$row3['lab_units']);
-                                        $payment = $row3['payment'];
-                                    }
-                                    $total_tuition =($tuition_fee * $total_unit);
+                                    while ($row1 = mysqli_fetch_array($assessment_info)) {
+
+                                        $student_info = mysqli_query($db, "SELECT * , CONCAT(tbl_students.lastname, ', ', tbl_students.firstname, ' ', tbl_students.middlename)  as fullname FROM tbl_schoolyears
+                                        LEFT JOIN tbl_students ON tbl_students.stud_id = tbl_schoolyears.stud_id
+                                        LEFT JOIN tbl_courses ON tbl_schoolyears.course_id = tbl_courses.course_id
+                                        LEFT JOIN tbl_year_levels ON tbl_year_levels.year_id = tbl_schoolyears.year_id
+                                        LEFT JOIN tbl_acadyears ON tbl_acadyears.academic_year = tbl_schoolyears.ay_id
+                                        LEFT JOIN tbl_semesters ON tbl_semesters.semester = tbl_schoolyears.sem_id
+                                        WHERE tbl_schoolyears.stud_id = '$row1[stud_id]' AND tbl_acadyears.ay_id = '$row1[ay_id]' AND tbl_semesters.sem_id = '$row1[sem_id]'") or die (mysqli_error($db));
+
+                                        while ($row3 = mysqli_fetch_array($student_info)) {
+            
+                                        $unittotal = mysqli_query($db, "SELECT SUM(unit_total) AS total_unit FROM tbl_enrolled_subjects
+                                        LEFT JOIN tbl_subjects_new ON tbl_subjects_new.subj_id = tbl_enrolled_subjects.subj_id
+                                        WHERE tbl_enrolled_subjects.stud_id = '$row1[stud_id]' AND tbl_enrolled_subjects.acad_year = '$row3[academic_year]' AND tbl_enrolled_subjects.semester = '$row3[semester]'") or die (mysqli_error($db));
+
+                                        while ($row2 = mysqli_fetch_array($unittotal)) {
+                                            $total_unit = $row2['total_unit'];
+                                        }
+                                        
+                                        $discount_array = explode(",",$row1['disc_id']);
+                                        $lab_array = explode(",",$row1['lab_id']);
+                                        $units = explode(",",$row1['lab_units']);
+                                        $nstp_array = explode(",",$row1['nstp_id']);
+                                        $nstp_units = explode(",",$row1['nstp_units']);
+                                    
+                                        $total_tuition =($row1['tuition_fee'] * $total_unit);
                     
                             ?>
                         <div class="row">
@@ -65,31 +68,46 @@ $stud_no = $_GET['stud_no'];
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Student Name</label>
-                                        <input class="form-control" type="text" value="<?php echo $row1['fullname'];?>"
+                                        <input class="form-control" type="text" value="<?php echo $row3['fullname'];?>"
                                             name="discount_desc" disabled />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <label class="mt-3">Academic Year</label>
-                                        <select class="form-control" id="academic_year" disabled>
-                                            <?php $getEAY = mysqli_query($db, "SELECT * FROM tbl_acadyears WHERE ay_id = '$_SESSION[AYear]'");
+                                    <div class="col-sm-6">
+                                        <label class="mt-3">Semester</label>
+                                        <select class="form-control" id="semester" disabled>
+                                            <?php $getEAY = mysqli_query($db, "SELECT * FROM tbl_semesters WHERE sem_id = '$row1[sem_id]'");
                                             while ($row = mysqli_fetch_array($getEAY)) {
-                                                $ay_id = $row['ay_id'];
                                             ?>
-                                            <option selected value="<?php echo $row['ay_id']; ?>">
-                                                <?php echo $row['academic_year'];
-                                            } ?></option>
+                                            <option selected value="<?php echo $row['sem_id']; ?>">
+                                                <?php echo $row['semester'];?>
+                                            </option>
+                                            <?php
+                                            }
+                                            ?>
                                         </select>
                                         <input type="text" name="ay_id" value="<?php echo $ay_id; ?>" hidden>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="mt-3">Academic Year</label>
+                                        <select class="form-control" id="academic_year" disabled>
+                                            <?php $getEAY = mysqli_query($db, "SELECT * FROM tbl_acadyears WHERE ay_id = '$row1[ay_id]'");
+                                            while ($row = mysqli_fetch_array($getEAY)) {
+                                            ?>
+                                            <option selected value="<?php echo $row['ay_id']; ?>">
+                                                <?php echo $row['academic_year'];?>
+                                            </option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <label class="mt-3">Course</label>
-                                        <input class="form-control" type="text" value="<?php echo $row1['course_abv'];?>"
+                                        <label class="mt-3">Year Level and Course</label>
+                                        <input class="form-control" type="text" value="<?php echo $row3['year_level'].' - '. $row3['course_abv'];?>"
                                             name="discount" disabled/>
-                                        <input type="text" name="course_id" value="<?php echo $row1['course_id']?>" hidden>
                                         
                                     </div>
                                     <div class="col-sm-4">
@@ -99,9 +117,8 @@ $stud_no = $_GET['stud_no'];
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="mt-3">Tuition Fee per Unit</label>
-                                        <input class="form-control" type="text" value="Php <?php echo number_format($tuition_fee, 2);?>"
+                                        <input class="form-control" type="text" value="Php <?php echo number_format($row1['tuition_fee'], 2);?>"
                                             name="discount" disabled/>
-                                            <input type="text" name="tf_id" value="<?php echo $tf_id; ?>" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -117,10 +134,15 @@ $stud_no = $_GET['stud_no'];
                                     <div class="col-sm-6">
                                         <label class="mt-3">Payment</label>
                                         <select class="form-control" id="gender" name="payment">
-                                            <option value="<?php echo $payment;?>"><?php echo ucfirst($payment);?></option>
-                                            <option value="cash">Cash</option>
-                                            <option value="trimestral">Trimestral</option>
-                                            <option value="quarterly">Quarterly</option>
+                                            <option value="<?php echo $row1['payment'];?>"><?php echo ucfirst($row1['payment']);?></option>
+                                            <?php
+                                                $payments_info = mysqli_query($db, "SELECT * FROM tbl_payments WHERE NOT payment = '$row1[payment]'");
+                                                while ($row = mysqli_fetch_array($payments_info)) {
+                                            ?>
+                                            <option value="<?php echo $row['payment']?>"><?php echo ucfirst($row['payment'])?></option>
+                                            <?php
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -129,8 +151,8 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Laboratories</label>
                                         <?php
                                             $i = 0;
-                                            $selectLab = mysqli_query($acc,"SELECT lab_id, lab, lab_desc FROM tbl_lab_fees WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
-                                            while ($row5 = mysqli_fetch_array($selectLab)) {
+                                            $lab_info = mysqli_query($db,"SELECT lab_id, lab, lab_desc FROM tbl_lab_fees WHERE year_id = '$row3[year_id]' AND ay_id = '$row1[ay_id]'");
+                                            while ($row5 = mysqli_fetch_array($lab_info)) {
 
                                         ?>
                                         <div class="form-check">
@@ -154,18 +176,18 @@ $stud_no = $_GET['stud_no'];
                                     <div class="col-sm-12">
                                         <label class="mt-3">NSTP</label>
                                         <?php
-                                            $i = 1;
-                                            $selectLab = mysqli_query($acc,"SELECT * FROM tbl_nstp WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
-                                            while ($row5 = mysqli_fetch_array($selectLab)) {
+                                            $i = 0;
+                                            $nstp_info = mysqli_query($db,"SELECT * FROM tbl_nstp_fees WHERE year_id = '$row1[year_id]' AND ay_id = '$row1[ay_id]'");
+                                            while ($row5 = mysqli_fetch_array($nstp_info)) {
                                         ?>
                                         <div class="form-check">
                                             <div class="row">
                                             <div class="col-sm-4">
-                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp[]">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp[]" <?php echo (in_array($row5['nstp_id'], $nstp_array) ? 'checked ': '');?>>
                                             <label><?php echo $row5['component']?></label>
                                             </div>
                                             <div class="col-sm-3">
-                                            <input class="form-control form-control-sm" name="index_nstp[]" type="number" placeholder="no. of units"> 
+                                            <input class="form-control form-control-sm" name="index_nstp[]" type="number" placeholder="no. of units" <?php echo (in_array($row5['nstp_id'], $nstp_array) ? 'value="'.$nstp_units[$i].'"' .$i++: '');?>> 
                                             </div>
                                             </div>
                                         </div>
@@ -181,7 +203,7 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Discounts</label>
                                         
                                             <?php
-                                                $selectDiscount = mysqli_query($acc, "SELECT disc_id ,discount, discount_desc, percent FROM tbl_discounts WHERE ay_id = '$_SESSION[AYear]'");
+                                                $selectDiscount = mysqli_query($db, "SELECT disc_id ,discount, discount_desc, percent FROM tbl_discounts WHERE ay_id = '$row1[ay_id]'");
                                                 while ($row4 = mysqli_fetch_array($selectDiscount)) {
 
                                             ?>
@@ -202,7 +224,7 @@ $stud_no = $_GET['stud_no'];
                                     Assessment</button>
                             </div>
                             <?php
-                                }
+                                }}
                             ?>
                         </form>
                     </div>

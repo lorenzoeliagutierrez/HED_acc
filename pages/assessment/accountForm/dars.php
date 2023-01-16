@@ -475,10 +475,10 @@ $pdf->Cell(45);
 
 $total_miscell = 0;
 
-$miscell = mysqli_query($acc, "SELECT * FROM tbl_miscellanous_fees WHERE ay_id = '$_SESSION[AYear]' AND year_id = '$row[year_id]'") or die (mysqli_error($acc));
+$miscell = mysqli_query($db, "SELECT * FROM tbl_miscellaneous_fees WHERE ay_id = '$_SESSION[AYear]' AND year_id = '$row[year_id]'") or die (mysqli_error($db));
 while ($row4 = mysqli_fetch_array($miscell)) {
 
-    $total_miscell = $total_miscell + $row4['miscellanous'];
+    $total_miscell = $total_miscell + $row4['miscellaneous'];
 
 }
 
@@ -530,7 +530,7 @@ $pdf->Rect(50, 51.5, 15, 37);
 $pdf->Rect(65, 51.5, 18, 37);
 $pdf->Rect(83, 51.5, 12, 37);
 
-$assessment = mysqli_query($acc, "SELECT * FROM tbl_assessed_tf  LEFT JOIN tbl_tuition_fees ON tbl_tuition_fees.tf_id = tbl_assessed_tf.tf_id WHERE stud_no = '$row[stud_no]' AND sem_id = '$_SESSION[ASem]' AND tbl_assessed_tf.ay_id = '$_SESSION[AYear]'") or die (mysqli_error($acc));
+$assessment = mysqli_query($db, "SELECT * FROM tbl_assessed_tf  LEFT JOIN tbl_tuition_fees ON tbl_tuition_fees.tf_id = tbl_assessed_tf.tf_id WHERE stud_id = '$row[stud_id]' AND sem_id = '$_SESSION[ASem]' AND tbl_assessed_tf.ay_id = '$_SESSION[AYear]'") or die (mysqli_error($db));
 while ($sql = mysqli_fetch_array($assessment)) {
 
     $tuition_per_unit = $sql['tuition_fee'];
@@ -540,6 +540,8 @@ while ($sql = mysqli_fetch_array($assessment)) {
     $discount_array = explode(",",$sql['disc_id']);
     $lab_array = explode(",",$sql['lab_id']);
     $units_array = explode(",",$sql['lab_units']);
+    $nstp_array = explode(",",$sql['nstp_id']);
+    $nstp_units_array = explode(",",$sql['nstp_units']);
 
 $pdf->SetXY(95, 51.5);
 $pdf->SetFont('Arial', '', '7');
@@ -549,7 +551,7 @@ $pdf->Cell(20, 3, number_format($f_fee, 2), 'L,R,B', 0);
 $total_fee = $f_fee;
 foreach ($discount_array as $discount_value) {
 
-    $discounts = mysqli_query($acc, "SELECT discount_desc, percent, discount, discount_status FROM tbl_discounts WHERE disc_id = '$discount_value'") or die (mysqli_error($acc));
+    $discounts = mysqli_query($db, "SELECT discount_desc, percent, discount, discount_status FROM tbl_discounts WHERE disc_id = '$discount_value'") or die (mysqli_error($db));
     while ($row3 = mysqli_fetch_array($discounts)) {
 
         if ($row3['discount_status'] == 1) {
@@ -574,10 +576,21 @@ $pdf->SetX(95);
 $i = 0;
 $total_lab = 0;
 foreach ($lab_array as $lab_values) {
-    $lab = mysqli_query($acc, "SELECT * FROM tbl_lab_fees WHERE lab_id = '$lab_values'") or die (mysqli_error($acc));
+    $lab = mysqli_query($db, "SELECT * FROM tbl_lab_fees WHERE lab_id = '$lab_values'") or die (mysqli_error($db));
     while ($row5 = mysqli_fetch_array($lab)) {
     $lab_product = $units_array[$i] * $row5['lab'];
     $total_lab = $total_lab + $lab_product;
+    }
+    $i++;
+}
+
+$i = 0;
+$total_nstp = 0;
+foreach ($nstp_array as $nstp_values) {
+    $nstp = mysqli_query($db, "SELECT * FROM tbl_nstp_fees WHERE nstp_id = '$nstp_values'") or die (mysqli_error($db));
+    while ($row5 = mysqli_fetch_array($nstp)) {
+    $nstp_product = $nstp_units_array[$i] * $row5['component_value'];
+    $total_nstp = $total_nstp + $nstp_product;
     }
     $i++;
 }
@@ -588,7 +601,7 @@ $pdf->Cell(20, 3, '', 'L,R,B', 1);
 
 $pdf->SetX(95);
 $pdf->Cell(20, 3, 'NSTP', 'L,R,B', 0);
-$pdf->Cell(20, 3, '', 'L,R,B', 0);
+$pdf->Cell(20, 3, number_format($total_nstp, 2), 'L,R,B', 0);
 $pdf->Cell(20, 3, '', 'L,R,B', 1);
 
 $pdf->SetX(95);
@@ -598,7 +611,7 @@ $pdf->Cell(20, 3, '', 'L,R,B', 1);
 
 $pdf->SetX(95);
 $pdf->Cell(20, 3, 'TOTAL', 'L,R,B', 0);
-$pdf->Cell(20, 3, number_format(($total_fee + $total_miscell + $total_lab), 2), 'L,R,B', 0);
+$pdf->Cell(20, 3, number_format(($total_fee + $total_miscell + $total_lab + $total_nstp), 2), 'L,R,B', 0);
 $pdf->Cell(20, 3, '', 'L,R,B', 1);
 
 }
@@ -1188,7 +1201,7 @@ $pdf->Cell(29, 2.5, number_format($total_lab, 2), 1, 1);
 $pdf->SetXY(72, 95);
 $pdf->Cell(22, 2, '', 0, 0, 'C');
 $pdf->Cell(32, 2.5, 'NSTP', 1, 0);
-$pdf->Cell(29, 2.5, '', 1, 1);
+$pdf->Cell(29, 2.5, number_format($total_nstp, 2), 1, 1);
 $pdf->SetFont('Arial', '', 9);
 $pdf->Cell(90, 5, 'CHANGE OF SUBJECT(S)/LOAD', 1, 0, 'C');
 $pdf->SetFont('Arial', '', 6);
@@ -1196,7 +1209,7 @@ $pdf->Cell(32, 2.5, 'Other Fees', 1, 0);
 $pdf->Cell(29, 2.5, '', 1, 1);
 $pdf->SetXY(94, 100);
 $pdf->Cell(32, 2.5, 'TOTAL', 1, 0, 'C');
-$pdf->Cell(29, 2.5, number_format(($total_fee + $total_miscell + $total_lab), 2), 1, 1);
+$pdf->Cell(29, 2.5, number_format(($total_fee + $total_miscell + $total_lab + $total_nstp), 2), 1, 1);
 
 $pdf->Cell(31, 3, 'Added', 1, 0, 'C');
 $pdf->Cell(15, 3, 'Units', 1, 0, 'C');

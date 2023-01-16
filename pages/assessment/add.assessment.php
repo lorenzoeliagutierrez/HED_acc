@@ -4,7 +4,7 @@ include '../../includes/head.php';
 include 'accountConn/conn.php';
 include '../../includes/session.php';
 
-$stud_no = $_GET['stud_no'];
+$stud_id = $_GET['stud_id'];
 
 ?>
 <title>
@@ -28,12 +28,12 @@ $stud_no = $_GET['stud_no'];
                         <h5 class="font-weight-bolder mb-0">Add Assessment</h5>
                         <p class="text-sm mb-0">Assessment Details</p>
                         <hr class="horizontal dark my-3">
-                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.add.assessment.php?stud_no=<?php echo $stud_no?>">
+                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.add.assessment.php?stud_id=<?php echo $stud_id?>">
                             <?php
                                 $studInfo = mysqli_query($db, "SELECT *,CONCAT(tbl_students.lastname, ', ', tbl_students.firstname, ' ', tbl_students.middlename)  as fullname FROM tbl_schoolyears 
                                 LEFT JOIN tbl_students ON tbl_students.stud_id = tbl_schoolyears.stud_id
-                                LEFT JOIN tbl_courses ON tbl_courses.course_id = tbl_schoolyears.course_id 
-                                WHERE tbl_students.stud_no = '$stud_no' AND ay_id = '$_SESSION[AC]' AND sem_id = '$_SESSION[S]' AND remark = 'Approved'") or die (mysqli_error($db));
+                                LEFT JOIN tbl_courses ON tbl_courses.course_id = tbl_schoolyears.course_id
+                                WHERE tbl_students.stud_id = '$stud_id' AND sem_id = '$_SESSION[S]' AND ay_id = '$_SESSION[AC]'") or die (mysqli_error($db));
                                 while ($row1 = mysqli_fetch_array($studInfo)) {
 
                                     $unittotal = mysqli_query($db, "SELECT SUM(unit_total) AS total_unit FROM tbl_enrolled_subjects
@@ -44,14 +44,14 @@ $stud_no = $_GET['stud_no'];
                                         $total_unit = $row2['total_unit'];
                                     }
 
-                                    $tuitionInfo = mysqli_query($acc, "SELECT tuition_fee, tf_id FROM tbl_tuition_fees WHERE course_id = '$row1[course_id]' AND ay_id = '$_SESSION[AYear]' AND year_id = '$row1[year_id]'") or die (mysqli_error($acc));
+                                    $tuitionInfo = mysqli_query($db, "SELECT tuition_fee, tf_id FROM tbl_tuition_fees WHERE course_id = '$row1[course_id]' AND ay_id = '$_SESSION[AYear]' AND year_id = '$row1[year_id]'") or die (mysqli_error($db));
 
                                     while ($row3 = mysqli_fetch_array($tuitionInfo)) {
                                         $tuition_fee = $row3['tuition_fee'];
                                         $tf_id = $row3['tf_id'];
                                     }
 
-                                    $total_tuition =($tuition_fee * $total_unit);
+                                    $total_tuition = ($tuition_fee * $total_unit);
                     
                             ?>
                         <div class="row">
@@ -61,6 +61,7 @@ $stud_no = $_GET['stud_no'];
                                         <label>Student Name</label>
                                         <input class="form-control" type="text" value="<?php echo $row1['fullname'];?>"
                                             name="discount_desc" disabled />
+                                        <input type="text" value="<?php echo $tf_id;?>" name="tf_id" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -75,7 +76,6 @@ $stud_no = $_GET['stud_no'];
                                                 <?php echo $row['academic_year'];
                                             } ?></option>
                                         </select>
-                                        <input type="text" name="ay_id" value="<?php echo $ay_id; ?>" hidden>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="mt-3">Semester</label>
@@ -88,7 +88,6 @@ $stud_no = $_GET['stud_no'];
                                                 <?php echo $row['semester'];
                                             } ?></option>
                                         </select>
-                                        <input type="text" name="sem_id" value="<?php echo $sem_id; ?>" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -96,8 +95,6 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Course</label>
                                         <input class="form-control" type="text" value="<?php echo $row1['course_abv'];?>"
                                             name="discount" disabled/>
-                                        <input type="text" name="course_id" value="<?php echo $row1['course_id']?>" hidden>
-                                        
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="mt-3">Total Unit</label>
@@ -108,7 +105,6 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Tuition Fee per Unit</label>
                                         <input class="form-control" type="text" value="Php <?php echo number_format($tuition_fee, 2);?>"
                                             name="discount" disabled/>
-                                            <input type="text" name="tf_id" value="<?php echo $tf_id; ?>" hidden>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -124,9 +120,14 @@ $stud_no = $_GET['stud_no'];
                                     <div class="col-sm-6">
                                         <label class="mt-3">Payment</label>
                                         <select class="form-control" id="gender" name="payment">
-                                            <option value="cash">Cash</option>
-                                            <option value="trimestral">Trimestral</option>
-                                            <option value="quarterly">Quarterly</option>
+                                            <?php
+                                                $payments_info = mysqli_query($db, "SELECT * FROM tbl_payments");
+                                                while ($row = mysqli_fetch_array($payments_info)) {
+                                            ?>
+                                            <option value="<?php echo $row['payment']?>"><?php echo ucfirst($row['payment'])?></option>
+                                            <?php
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -135,7 +136,7 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Laboratories</label>
                                         <?php
                                             $i = 1;
-                                            $selectLab = mysqli_query($acc,"SELECT lab_id, lab, lab_desc FROM tbl_lab_fees WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
+                                            $selectLab = mysqli_query($db,"SELECT lab_id, lab, lab_desc FROM tbl_lab_fees WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
                                             while ($row5 = mysqli_fetch_array($selectLab)) {
                                         ?>
                                         <div class="form-check">
@@ -145,7 +146,7 @@ $stud_no = $_GET['stud_no'];
                                             <label><?php echo $row5['lab_desc']?></label>
                                             </div>
                                             <div class="col-sm-3">
-                                            <input class="form-control form-control-sm" name="index[]" type="number" placeholder="no. of units"> 
+                                            <input class="form-control form-control-sm" name="lab_units[]" type="number" placeholder="no. of units"> 
                                             </div>
                                             </div>
                                         </div>
@@ -160,23 +161,21 @@ $stud_no = $_GET['stud_no'];
                                     <div class="col-sm-12">
                                         <label class="mt-3">NSTP</label>
                                         <?php
-                                            $i = 1;
-                                            $selectLab = mysqli_query($acc,"SELECT * FROM tbl_nstp WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
+                                            $selectLab = mysqli_query($db,"SELECT nstp_id, component FROM tbl_nstp_fees WHERE year_id = '$row1[year_id]' AND ay_id = '$_SESSION[AYear]'");
                                             while ($row5 = mysqli_fetch_array($selectLab)) {
                                         ?>
                                         <div class="form-check">
                                             <div class="row">
                                             <div class="col-sm-4">
-                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp[]">
+                                            <input class="form-check-input" type="checkbox" value="<?php echo $row5['nstp_id']?>" name="nstp">
                                             <label><?php echo $row5['component']?></label>
                                             </div>
                                             <div class="col-sm-3">
-                                            <input class="form-control form-control-sm" name="index_nstp[]" type="number" placeholder="no. of units"> 
+                                            <input class="form-control form-control-sm" name="nstp_units[]" type="number" placeholder="no. of units"> 
                                             </div>
                                             </div>
                                         </div>
                                         <?php
-                                        $i++;
                                         }
                                         ?>
                                         
@@ -187,7 +186,7 @@ $stud_no = $_GET['stud_no'];
                                         <label class="mt-3">Discounts</label>
                                         
                                             <?php
-                                                $selectDiscount = mysqli_query($acc, "SELECT disc_id ,discount, discount_desc, percent FROM tbl_discounts WHERE ay_id = '$_SESSION[AYear]'");
+                                                $selectDiscount = mysqli_query($db, "SELECT disc_id ,discount, discount_desc, percent FROM tbl_discounts WHERE ay_id = '$_SESSION[AYear]'");
                                                 while ($row4 = mysqli_fetch_array($selectDiscount)) {
                                             ?>
                                         <div class="form-check">

@@ -4,10 +4,10 @@ include '../../includes/head.php';
 include 'accountConn/conn.php';
 include '../../includes/session.php';
 
-$miscell_id = $_GET['miscell_id'];
+$nstp_id = $_GET['nstp_id'];
 ?>
 <title>
-    Edit Miscellaneous Fee | SFAC - Bacoor
+    Edit NSTP Fee | SFAC - Bacoor
 </title>
 </head>
 
@@ -16,7 +16,7 @@ $miscell_id = $_GET['miscell_id'];
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">Edit Miscellaneous Fee</h6>
+        <h6 class="font-weight-bolder mb-0">Edit NSTP Fee</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -24,24 +24,24 @@ $miscell_id = $_GET['miscell_id'];
             <div class="row mb-10">
                 <div class="col-lg-9 col-12 mx-auto">
                     <div class="card card-body mt-4 shadow-sm">
-                        <h5 class="font-weight-bolder mb-0">Miscellaneous Fee</h5>
-                        <p class="text-sm mb-0">Miscellaneous Fee Details</p>
+                        <h5 class="font-weight-bolder mb-0">NSTP Fee</h5>
+                        <p class="text-sm mb-0">NSTP Fee Details</p>
                         <hr class="horizontal dark my-3">
-                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.miscell.php?miscell_id=<?php echo $miscell_id?>">
+                        <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.nstp.php?nstp_id=<?php echo $nstp_id?>">
                         <?php
-                            $miscell_select = mysqli_query($db,"SELECT * FROM tbl_miscellaneous_fees WHERE miscell_id = '$miscell_id'");
-                            while ($row1 = mysqli_fetch_array($miscell_select)) {
-                        ?>
+                            $nstp_select = mysqli_query($db,"SELECT * FROM tbl_nstp_fees WHERE nstp_id = '$nstp_id'");
+                            while ($row1 = mysqli_fetch_array($nstp_select)) {
+                        ?>    
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <label>Miscellaneous Fee Description</label>
-                                    <input class="form-control" type="text" placeholder="Fee Description" value="<?php echo $row1['miscell_desc'];?>"
-                                        name="miscell_desc" />
+                                    <label>NSTP Fee Description</label>
+                                    <input class="form-control" type="text" placeholder="Fee Description" value="<?php echo $row1['component']?>"
+                                        name="component" />
                                 </div>
                                 <div class="col-sm-6">
                                     <label>Fee Value</label>
-                                    <input class="form-control" type="text" placeholder="0.00" value="<?php echo $row1['miscellaneous'];?>"
-                                        name="miscellaneous" />
+                                    <input class="form-control" type="text" placeholder="0.00" value="<?php echo $row1['component_value']?>"
+                                        name="component_value" />
                                 </div>
                             </div>
                             <div class="row">
@@ -93,11 +93,10 @@ $miscell_id = $_GET['miscell_id'];
                             <div class="d-flex justify-content-end mt-4">
                                 <button class="btn bg-gradient-dark text-white m-0 ms-2" type="submit" title="Send"
                                     name="submit">Edit
-                                    Miscellaneous Fee</button>
+                                    NSTP Fee</button>
                             </div>
                         <?php
-                        }
-                        ?>
+                        }?>
                         </form>
                     </div>
                 </div>

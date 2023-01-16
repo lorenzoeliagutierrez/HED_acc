@@ -4,7 +4,7 @@ include '../../includes/head.php';
 include '../../includes/session.php';
 ?>
 <title>
-    Laboratory Fees List | SFAC - Bacoor
+    Installment Dates List | SFAC - Bacoor
 </title>
 </head>
 
@@ -14,7 +14,7 @@ include '../../includes/session.php';
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">View Laboratory Fees</h6>
+        <h6 class="font-weight-bolder mb-0">View Installment Dates List</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -24,7 +24,7 @@ include '../../includes/session.php';
                     <div class="card shadow shadow-xl">
                         <!-- Card header -->
                         <div class="card-header">
-                            <h5 class="mb-0">Laboratory Fees List</h5>
+                            <h5 class="mb-0">Installment Dates List</h5>
                             <!-- <p class="text-sm mb-0">
                                         A lightweight, extendable, dependency-free javascript HTML table plugin.
                                     </p> -->
@@ -35,54 +35,45 @@ include '../../includes/session.php';
                                     <tr>
                                         <th></th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Description</th>
+                                            Prelims</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Fee Value</th>
+                                            Midterms</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Year Level</th>
+                                            Finals</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Academic Year</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Created At</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Last Updated at</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Last Updated by</th>
+                                            Semester - Academic Year</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $list_lab = mysqli_query($db, "SELECT * FROM tbl_lab_fees LEFT JOIN tbl_year_levels ON tbl_year_levels.year_id = tbl_lab_fees.year_id");
-                                    while ($row = mysqli_fetch_array($list_lab)) {
-                                        $id = $row['lab_id'];
-                                        $created_at = new DateTime($row['created_at']);
-                                        $last_updated = new DateTime($row['last_updated']);
+                                    $list_discount = mysqli_query($db, "SELECT * FROM tbl_installment_dates");
+                                    while ($row = mysqli_fetch_array($list_discount)) {
+                                        $id = $row['installment_id'];
+                                        $prelims = new DateTime($row['date_1']);
+                                        $midterms = new DateTime($row['date_2']);
+                                        $finals = new DateTime($row['date_3']);
 
                                         $ay = mysqli_query($db, "SELECT * FROM tbl_acadyears WHERE ay_id = $row[ay_id]");
                                         $row1 = mysqli_fetch_array($ay);
+
+                                        $sem = mysqli_query($db, "SELECT * FROM tbl_semesters WHERE sem_id = $row[sem_id]");
+                                        $row2 = mysqli_fetch_array($sem);
                                     ?>
 
                                     <tr>
                                         <td></td>
                                         <td class="text-sm font-weight-normal">
-                                            <?php echo $row['lab_desc']; ?></td>
+                                            <?php echo $prelims->format('F d, Y'); ?></td>
                                         <td class="text-sm font-weight-normal">
-                                            <?php echo number_format($row['lab'], 2); ?></td>
+                                            <?php echo $midterms->format('F d, Y'); ?></td>
                                         <td class="text-sm font-weight-normal">
-                                            <?php echo $row['year_level']; ?></td>
+                                            <?php echo $finals->format('F d, Y'); ?></td>
                                         <td class="text-sm font-weight-normal">
-                                            <?php echo $row1['academic_year']; ?></td>
-                                        <td class="text-sm font-weight-normal">
-                                            <?php echo $created_at->format('h:i a \o\n F d, Y'); ?>
-                                        </td>
-                                        <td class="text-sm font-weight-normal">
-                                            <?php echo $last_updated->format('h:i a \o\n F d, Y'); ?></td>
-                                        <td class="text-sm font-weight-normal">
-                                            <?php echo $row['updated_by']; ?>
+                                            <?php echo $row2['semester'].' - '. $row1['academic_year']; ?>
                                         </td>
                                         <td class="text-sm font-weight-normal">
                                             <a class="btn bg-gradient-primary text-xs"
-                                                href="edit.lab.php?lab_id=<?php echo $id; ?>"><i
+                                                href="edit.installment.date.php?installment_id=<?php echo $id; ?>"><i
                                                     class="text-xs fas fa-edit"></i> Edit</a>
 
                                             <a class="btn btn-block bg-gradient-danger mb-3 text-xs"
@@ -111,15 +102,15 @@ include '../../includes/session.php';
                                                     <div class="py-3 text-center">
                                                         <i class="fas fa-trash-alt text-9xl"></i>
                                                         <h4 class="text-gradient text-danger mt-4">
-                                                            Delete Laboratory Fee!</h4>
-                                                        <p>Are you sure you want to delete
+                                                            Delete Installment Date!</h4>
+                                                        <p>Are you sure you want to delete dates for
                                                             <br>
-                                                            <i><b><?php echo $row['lab_desc']; ?></b></i>?
+                                                            <i><b><?php echo  $row2['semester'].' - '. $row1['academic_year']; ?></b></i>?
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="userData/ctrl.del.lab.php?lab_id=<?php echo $id; ?>"
+                                                    <a href="userData/ctrl.del.installment.date.php?installment_id=<?php echo $id; ?>"
                                                         class="btn btn-white text-white bg-danger">Delete</a>
                                                     <button type="button"
                                                         class="btn btn-link text-secondary btn-outline-dark ml-auto"

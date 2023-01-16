@@ -1,62 +1,20 @@
 <?php
 session_start();
 include '../../includes/head.php';
-include 'accountConn/conn.php';
 include '../../includes/session.php';
-
 ?>
 <title>
-    Miscellaneous Fee List | SFAC - Bacoor
+    Miscellaneous Fees List | SFAC - Bacoor
 </title>
 </head>
 
-<script>
-$('document').ready(function() {
 
-    var table = $('#test_table').DataTable({
-        ajax: {
-            url: 'userData/ctrl.list.miscell.php',
-            type: 'POST',
-            dataSrc: ''
-        },
-        columns: [
-                { data: 'miscell_desc' },
-                {data: 'year_id'},
-                  { data: 'miscellanous' },
-                  { data: 'ay_id' },
-                  { data: 'created_at' },
-                  { data: 'last_updated' },
-                  { data: 'updated_by' },
-                  { data: 'miscell_id',
-                    render: function (data, type, row) {
-                        return '<a class="btn bg-gradient-primary text-xs" href="edit.miscell.php?miscell_id='+data+'"><i class="text-xs fas fa-edit"></i> Edit</a> <a class="btn btn-block bg-gradient-danger mb-3 text-xs" data-bs-toggle="modal" data-bs-target="#modal-notification'+data+'"><iclass="text-xs fas fa-trash-alt"></i> Delete</a>';
-                    }
-                }
-        ],
-        createdRow: function( row, data, dataIndex ) {
-            
-            $(row).addClass( 'important' );
-            
-        },
-    });
-
-    $('#academic_year').on( 'change', function () {
-    table
-        .columns(3)
-        .search( this.value )
-        .draw();
-    });
-})
-
-
-;
-</script>
 <body class="g-sidenav-show  bg-gray-100">
     <?php include '../../includes/sidebar.php'; ?>
     <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
         <!-- Navbar -->
         <?php include '../../includes/navbar-title.php'; ?>
-        <h6 class="font-weight-bolder mb-0">View Miscellaneous List</h6>
+        <h6 class="font-weight-bolder mb-0">View Miscellaneous Fees</h6>
         <?php include '../../includes/navbar.php'; ?>
         <!-- End Navbar -->
 
@@ -66,66 +24,75 @@ $('document').ready(function() {
                     <div class="card shadow shadow-xl">
                         <!-- Card header -->
                         <div class="card-header">
-                            <h5 class="mb-0">Miscellaneous List</h5>
+                            <h5 class="mb-0">Miscellaneous Fees List</h5>
                             <!-- <p class="text-sm mb-0">
                                         A lightweight, extendable, dependency-free javascript HTML table plugin.
                                     </p> -->
                         </div>
-                        <hr class="horizontal dark mt-0">
-                        
-                        <div class="row d-flex justify-content-center mx-4">
-                            <div class="col-md-12 m-1 justify-content-center">
-                                <div class="row justify-content-center">
-                                <div class="col-sm-4 justify-content-center">
-                                    <label>Academic Year</label>
-                                    <select class="form-control" name="ay_id" id="academic_year">
-                                        <option value="" disabled selected>Select Academic Year
-                                        </option>
-                                        <?php $getEAY = mysqli_query($db, "SELECT * FROM tbl_acadyears");
-                                        while ($row = mysqli_fetch_array($getEAY)) {
-                                        ?>
-                                        <option value="<?php echo $row['academic_year']; ?>">
-                                            <?php echo $row['academic_year'];
-                                        } ?></option>
-                                    </select>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
                         <div class="table-responsive px-4 my-4">
-                            <table class="table table-flush table-hover nowrap responsive" id="test_table">
+                            <table class="table table-flush table-hover nowrap responsive" id="datatable-basic">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th></th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
                                             Description</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Year</th>
+                                            Fee Value</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Value</th>
+                                            Year Level</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            A.Y Year</th>
+                                            Academic Year</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Created at</th>
+                                            Created At</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Last Updated</th>
+                                            Last Updated at</th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Updated By</th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-9">
-                                            Options</th>
+                                            Last Updated by</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                    $res = mysqli_query($acc, "SELECT * FROM tbl_miscellanous_fees") or die("Error: ".mysqli_error($acc));
-                                    
-                                    while( $row = mysqli_fetch_array($res) ) {
+                                    <?php
+                                    $list_miscell = mysqli_query($db, "SELECT * FROM tbl_miscellaneous_fees LEFT JOIN tbl_year_levels ON tbl_year_levels.year_id = tbl_miscellaneous_fees.year_id");
+                                    while ($row = mysqli_fetch_array($list_miscell)) {
                                         $id = $row['miscell_id'];
-                                        $ayselect = mysqli_query($db, "SELECT academic_year FROM tbl_acadyears WHERE ay_id = '$row[ay_id]'");
-                                            while ($row1 = mysqli_fetch_array($ayselect)) {
-                                                $ay_id = $row1['academic_year'];
-                                            }
-                                ?>
-                                <div class="modal fade" id="modal-notification<?php echo $id; ?>" tabindex="-1"
+                                        $created_at = new DateTime($row['created_at']);
+                                        $last_updated = new DateTime($row['last_updated']);
+
+                                        $ay = mysqli_query($db, "SELECT * FROM tbl_acadyears WHERE ay_id = $row[ay_id]");
+                                        $row1 = mysqli_fetch_array($ay);
+                                    ?>
+
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $row['miscell_desc']; ?></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo number_format($row['miscellaneous'], 2); ?></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $row['year_level']; ?></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $row1['academic_year']; ?></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $created_at->format('h:i a \o\n F d, Y'); ?>
+                                        </td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $last_updated->format('h:i a \o\n F d, Y'); ?></td>
+                                        <td class="text-sm font-weight-normal">
+                                            <?php echo $row['updated_by']; ?>
+                                        </td>
+                                        <td class="text-sm font-weight-normal">
+                                            <a class="btn bg-gradient-primary text-xs"
+                                                href="edit.miscell.php?miscell_id=<?php echo $id; ?>"><i
+                                                    class="text-xs fas fa-edit"></i> Edit</a>
+
+                                            <a class="btn btn-block bg-gradient-danger mb-3 text-xs"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-notification<?php echo $id; ?>"><i
+                                                    class="text-xs fas fa-trash-alt"></i> Delete</a>
+                                        </td>
+                                    </tr>
+                                    <!-- modal -->
+                                    <div class="modal fade" id="modal-notification<?php echo $id; ?>" tabindex="-1"
                                         role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
                                         <div class="modal-dialog modal-danger modal-dialog-centered modal-"
                                             role="document">
@@ -145,7 +112,7 @@ $('document').ready(function() {
                                                         <i class="fas fa-trash-alt text-9xl"></i>
                                                         <h4 class="text-gradient text-danger mt-4">
                                                             Delete Miscellaneous Fee!</h4>
-                                                        <p>This will collectively delete <b><?php echo $row['miscell_desc']; ?></b> from 1st to 4th year accounts. Are you sure you want to delete
+                                                        <p>Are you sure you want to delete
                                                             <br>
                                                             <i><b><?php echo $row['miscell_desc']; ?></b></i>?
                                                         </p>
@@ -161,7 +128,8 @@ $('document').ready(function() {
                                             </div>
                                         </div>
                                     </div>
-                                    <?php }?>
+                                    <!-- end modals -->
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

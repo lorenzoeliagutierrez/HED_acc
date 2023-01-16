@@ -29,7 +29,7 @@ $disc_id = $_GET['disc_id']
                         <hr class="horizontal dark my-3">
                         <form method="POST" enctype="multipart/form-data" action="userData/ctrl.edit.discount.php?disc_id=<?php echo $disc_id; ?>">
                             <?php
-                                $disc_select = mysqli_query($acc, "SELECT * FROM tbl_discounts WHERE disc_id = '$disc_id'");
+                                $disc_select = mysqli_query($db, "SELECT * FROM tbl_discounts WHERE disc_id = '$disc_id'");
                                 while ($row1 = mysqli_fetch_array($disc_select)) {
                             ?>
                             <div class="row">

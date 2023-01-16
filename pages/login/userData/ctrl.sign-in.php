@@ -100,6 +100,7 @@ if (isset($_POST['signin']) || isset($_SESSION['confirm'])) {
             } elseif ($hashedPwdCheck == true) {
                 $_SESSION['role'] = "Accounting";
                 $_SESSION['userid'] = $row['account_id'];
+                $_SESSION['name'] = $row['account_lastname'] . ", " . $row['account_firstname'];
             }
             header("location: ../../dashboard/index.php");
         }

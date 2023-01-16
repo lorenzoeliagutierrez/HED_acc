@@ -177,67 +177,59 @@ if (isset($_SESSION['emptyImg'])) {
     echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="RDisapproved"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['discAdded'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="discAdded"
+} elseif (isset($_SESSION['fee_success'])) { ////////////////////////////////////////////////////////////////////////////////////////////////////
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_success"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['discExisting'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="discExisting"
+} elseif (isset($_SESSION['fee_exists'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_exists"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['fee_exist1'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_exist1"
+} elseif (isset($_SESSION['fee_updated'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_updated"
+             id="autoClickBtn" hidden>
+         </a>'; 
+} elseif (isset($_SESSION['discount_success'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="discount_success"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['fee_exist2'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_exist2"
+} elseif (isset($_SESSION['discount_updated'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="discount_updated"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['fee_exist3'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_exist3"
+} elseif (isset($_SESSION['discount_exists'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="discount_exists"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['fee_exist4'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="fee_exist4"
+} elseif (isset($_SESSION['assessment_success'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="assessment_success"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['assessmentSuccess'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="assessmentSuccess"
+} elseif (isset($_SESSION['assessment_updated'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="assessment_updated"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['paymentEmpty'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="paymentEmpty"
+} elseif (isset($_SESSION['assessment_exists'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="assessment_exists"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['multiplePayment'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="multiplePayment"
+} elseif (isset($_SESSION['stud_not_exists'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="stud_not_exists"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['studnoEmpty'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="studnoEmpty"
+} elseif (isset($_SESSION['dates_success'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="dates_success"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['studnoUnenrolled'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="studnoUnenrolled"
+} elseif (isset($_SESSION['dates_updated'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="dates_updated"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['assessExist'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="assessExist"
+} elseif (isset($_SESSION['dates_exists'])) {
+    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="dates_exists"
              id="autoClickBtn" hidden>
          </a>';
-} elseif (isset($_SESSION['lab_success'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="lab_success"
-             id="autoClickBtn" hidden>
-         </a>';
-} elseif (isset($_SESSION['tuition_success'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="tuition_success"
-             id="autoClickBtn" hidden>
-         </a>';
-} elseif (isset($_SESSION['miscell_success'])) {
-    echo '<a class="btn bg-gradient-danger w-100 mb-0 toast-btn" data-target="miscell_success"
-             id="autoClickBtn" hidden>
-         </a>';
-} 
+}
 
 unset($_SESSION['emptyImg']);
 unset($_SESSION['successImg']);
@@ -287,222 +279,30 @@ unset($_SESSION['subjUpdate']);
 unset($_SESSION['inquiryComplete']);
 unset($_SESSION['inquiryAdmitted']);
 
-unset($_SESSION['discAdded']);
-unset($_SESSION['discExisting']);
-unset($_SESSION['fee_exist1']);
-unset($_SESSION['fee_exist2']);
-unset($_SESSION['fee_exist3']);
-unset($_SESSION['fee_exist4']);
-unset($_SESSION['assessmentSuccess']);
-unset($_SESSION['paymentEmpty']);
-unset($_SESSION['multiplePayment']);
+unset($_SESSION['fee_success']);
+unset($_SESSION['fee_exists']);
+unset($_SESSION['fee_updated']);
 
-unset($_SESSION['studnoEmpty']);
-unset($_SESSION['studnoUnenrolled']);
-unset($_SESSION['assessExist']);
-unset($_SESSION['lab_success']);
-unset($_SESSION['tuition_success']);
-unset($_SESSION['miscell_success']);
+unset($_SESSION['discount_success']);
+unset($_SESSION['discount_exists']);
+unset($_SESSION['discount_updated']);
+
+unset($_SESSION['assessment_success']);
+unset($_SESSION['assessment_exists']);
+unset($_SESSION['assessment_updated']);
+
+unset($_SESSION['stud_not_exists']);
+
+unset($_SESSION['dates_success']);
+unset($_SESSION['dates_exists']);
+unset($_SESSION['dates_updated']);
+
+
 
 
 ?>
 
 <div class="position-fixed top-2 end-1 z-index-3">
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="studnoEmpty" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           Student Number doesn't exist!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="studnoUnenrolled" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           Student is still unenrolled!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="assessExist" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           An assessment is already existing for this Student Number!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="assessmentSuccess" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-check-bold text-success me-2"></i>
-            <span class="me-auto font-weight-bold">Assessment Success!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           An assessment has been successfully added!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="paymentEmpty" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           There is no payment selected!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="multiplePayment" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           Multiple payment selected!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_exist1" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           A Fee for 1st Year is already existing!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_exist2" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           A Fee for 2nd Year is already existing!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_exist3" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           A Fee for 3rd Year is already existing!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_exist4" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-           A Fee for 4th Year is already existing!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="discExisting" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-notification-70 text-danger me-2"></i>
-            <span class="me-auto font-weight-bold">Input Error!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-            Discount is already existing!
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="discAdded" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-check-bold text-success me-2"></i>
-            <span class="me-auto font-weight-bold">Successfully added!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-            Discount has been successfully added.
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="lab_success" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-check-bold text-success me-2"></i>
-            <span class="me-auto font-weight-bold">Successfully added!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-            Laboratory Fee has been successfully added.
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="tuition_success" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-check-bold text-success me-2"></i>
-            <span class="me-auto font-weight-bold">Successfully added!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-            Tuition Fee has been successfully added.
-        </div>
-    </div>
-
-    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="miscell_success" aria-atomic="true">
-        <div class="toast-header border-0">
-            <i class="ni ni-check-bold text-success me-2"></i>
-            <span class="me-auto font-weight-bold">Successfully added!</span>
-            <small class="text-body"></small>
-            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
-        </div>
-        <hr class="horizontal dark m-0">
-        <div class="toast-body">
-            Miscellaneous Fee has been successfully added.
-        </div>
-    </div>
 
     <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="RDisapproved" aria-atomic="true">
         <div class="toast-header border-0">
@@ -1062,6 +862,183 @@ unset($_SESSION['miscell_success']);
         <hr class="horizontal dark m-0">
         <div class="toast-body">
             Inquiry successfully admitted.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_success"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Fee Added!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Fee successfully added.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="fee_exists" aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-notification-70 text-danger me-2"></i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Fee Exists!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Fee already exists.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="fee_updated"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Fee Updated!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Fee successfully updated.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="discount_success"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Discount Added!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Discount successfully added.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="discount_exists" aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-notification-70 text-danger me-2"></i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Discount Exists!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Discount already exists.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="discount_updated"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Discount Updated!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Discount successfully updated.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="assessment_success"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Assessment Added!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Assessment successfully added.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="assessment_exists" aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-notification-70 text-danger me-2"></i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Assessment Exists!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Assessment already exists.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="assessment_updated"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Assessment Updated!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Assessment successfully updated.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="stud_not_exists" aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-notification-70 text-danger me-2"></i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Error!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Error Student Number!
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="dates_success"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Installment Dates Added!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Installment Dates successfully added.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="dates_exists" aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-notification-70 text-danger me-2"></i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Installment Dates Exists!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Installment Dates already exists.
+        </div>
+    </div>
+
+    <div class="toast fade hide p-2 bg-white" role="alert" aria-live="assertive" id="dates_updated"
+        aria-atomic="true">
+        <div class="toast-header border-0">
+            <i class="ni ni-check-bold text-success me-2"></i>
+            <span class="me-auto font-weight-bold">Installment Dates Updated!</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+            Installment Dates successfully updated.
         </div>
     </div>
     <!-- End of Lorenzo -->

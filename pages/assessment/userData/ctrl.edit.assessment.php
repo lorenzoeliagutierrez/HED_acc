@@ -5,7 +5,7 @@ session_start();
 date_default_timezone_set('Asia/Manila');
 
 $acc_id = $_SESSION['userid'];
-$stud_no = $_GET['stud_no'];
+$assessed_id = $_GET['assessed_id'];
 
 if (isset($_POST['submit'])) {
 
@@ -14,13 +14,9 @@ if (isset($_POST['submit'])) {
         $fullname = $row['fullname'];
     }
 
-    $course_id = mysqli_escape_string($db, $_POST['course_id']);
-    $ay_id = mysqli_real_escape_string($db, $_POST['ay_id']);
-    $tf_id = mysqli_real_escape_string($db, $_POST['tf_id']);
     $payment = mysqli_real_escape_string($db, $_POST['payment']);
-    $created_at = mysqli_real_escape_string($db, $_POST['created_at']);
 
-    $updated_by = $fullname .' - '. $_SESSION['role'];
+    $updated_by = $_SESSION['name'] .' - '. $_SESSION['role'];
 
     if (isset($_POST['discounts'])) {
         $discounts_array = $_POST['discounts'];
@@ -50,18 +46,18 @@ if (isset($_POST['submit'])) {
 
         if (!empty($discounts_array)) {
 
-            $add_assessment = mysqli_query($acc, "UPDATE tbl_assessed_tf SET ay_id = '$ay_id', disc_id = '$discount_value', lab_id = '$lab_value', lab_units = '$index_value', stud_no = '$stud_no', payment = '$payment', course_id = '$course_id', tf_id = '$tf_id', last_updated = CURRENT_TIMESTAMP, updated_by = '$updated_by' WHERE stud_no = '$stud_no'") or die(mysqli_error($acc));
+            $add_assessment = mysqli_query($db, "UPDATE tbl_assessed_tf SET disc_id = '$discount_value', lab_id = '$lab_value', lab_units = '$index_value', payment = '$payment', last_updated = CURRENT_TIMESTAMP, updated_by = '$updated_by' WHERE assessed_id = '$assessed_id'") or die(mysqli_error($db));
 
             
-            $_SESSION['assessmentSuccess'] = true;
-            header('location:../assessment.fee.php?stud_no='.$stud_no);
+            $_SESSION['assessment_updated'] = true;
+            header('location:../assessment.fee.php?assessed_id='.$assessed_id);
 
         } elseif (empty($discounts_array)) {
 
-            $add_assessment = mysqli_query($acc, "UPDATE tbl_assessed_tf SET ay_id = '$ay_id', lab_id = '$lab_value', lab_units = '$index_value', stud_no = '$stud_no', payment = '$payment', course_id = '$course_id', tf_id = '$tf_id', last_updated = CURRENT_TIMESTAMP, updated_by = '$updated_by' WHERE stud_no = '$stud_no'") or die(mysqli_error($acc));
+            $add_assessment = mysqli_query($db, "UPDATE tbl_assessed_tf SET lab_id = '$lab_value', lab_units = '$index_value', payment = '$payment', last_updated = CURRENT_TIMESTAMP, updated_by = '$updated_by' WHERE assessed_id = '$assessed_id'") or die(mysqli_error($db));
 
-            $_SESSION['assessmentSuccess'] = true;
-            header('location:../assessment.fee.php?stud_no='.$stud_no);
+            $_SESSION['assessment_updated'] = true;
+            header('location:../assessment.fee.php?assessed_id='.$assessed_id);
 
         } 
  
